@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brainfujs</title>
+    <style>
+        div {
+            border: 1px solid black;
+            display: inline;
+            padding: 5px 12px;
+            font-family: monospace;
+        }
+        div#ou {
+            display: block;
+        }
+        textarea, button {
+            display: block;
+            margin: 2px 0;
+        }
+        h1 {
+            font-family: monospace;
+            font-size: 19px
+        }
+    </style>
+</head>
+<body>
+    <textarea id="i"></textarea>
+    <button onclick="code()">Run code</button>
+    <div id="ou">
+    <pre id="o"></pre>
+    </div>
+    <h1>Memory</h1>
+    <div id="a">0</div>
+    <div id="b">0</div>
+    <div id="c">0</div>
+    <div id="d">0</div>
+    <div id="e">0</div>
+    <div id="f">0</div>
+    <script>
+        function code() {
+            document.getElementById("o").textContent = "";
+            document.getElementById("i").disabled = true;
+            const code = document.getElementById("i").value;
+            const memis = ["a", "b", "c", "d", "e", "f"];
+            var memi = 0;
+            var mem = [0, 0, 0, 0, 0, 0];
+            document.getElementById("a").textContent = 0;
+            document.getElementById("b").textContent = 0;
+            document.getElementById("c").textContent = 0;
+            document.getElementById("d").textContent = 0;
+            document.getElementById("e").textContent = 0;
+            document.getElementById("f").textContent = 0;
+            for (var i=0; i < code.length; i++) {
+                switch (code[i]) {
+                    case "+":
+                        mem[memi] += 1;
+                        document.getElementById(memis[memi]).textContent = mem[memi];
+                        break;
+                    case "-":
+                        mem[memi] -= 1;
+                        document.getElementById(memis[memi]).textContent = mem[memi];
+                        break;
+                    case "<":
+                        memi -= 1;
+                        if (memi < 0) {
+                            memi = 5;
+                        }
+                        break;
+                    case ">":
+                        memi += 1;
+                        if (memi > 5) {
+                            memi = 0;
+                        }
+                        break;
+                    case ".":
+                        document.getElementById("o").append(mem[memi]);
+                        break;
+                    case ",":
+                        mem[memi] = window.prompt("Enter input");
+                        if (!isNaN(Number(mem[memi]))) {
+                            document.getElementById(memis[memi]).textContent = mem[memi];
+                        } else {
+                            document.getElementById("o").textContent = "Invalid input.";
+                            document.getElementById("i").disabled = false;
+                            return;
+                        }
+                        break;
+                    case "[":
+                        rep += 1;
+                        if (mem[memi] < 1) {
+                            while (code[i] != "]") {
+                                i += 1;
+                            }
+                            break;
+                        }
+                        break;
+                    case "]":
+                        if (mem[memi] > 0) {
+                            while (code[i] != "[") {
+                                i -= 1;
+                            }
+                            break;
+                        }
+                        break;
+                    default:
+                        document.getElementById("o").textContent = "Invalid expression.";
+                        document.getElementById("i").disabled = false;
+                        return;
+                        break;
+                }
+            }
+            document.getElementById("i").disabled = false;
+        }
+    </script>
+</body>
+</html>
