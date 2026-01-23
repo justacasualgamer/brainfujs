@@ -38,6 +38,11 @@
     <div id="e">0</div>
     <div id="f">0</div>
     <script>
+        document.addEventListener("keydown", (e) => {
+            if (e.key == "Enter") {
+                code()
+            }
+        });
         function code() {
             document.getElementById("o").textContent = "";
             document.getElementById("i").disabled = true;
@@ -79,6 +84,16 @@
                     case ",":
                         mem[memi] = window.prompt("Enter input");
                         if (!isNaN(Number(mem[memi]))) {
+                            if (String(mem[memi]).includes("e") || String(mem[memi]).includes(".")) {
+                                document.getElementById("o").textContent = "No.";
+                                document.getElementById("i").disabled = false;
+                                return;
+                            }
+                            if (String(mem[memi]).trim() == "") {
+                                document.getElementById("o").textContent = "Why would you do that?";
+                                document.getElementById("i").disabled = false;
+                                return;
+                            }
                             document.getElementById(memis[memi]).textContent = mem[memi];
                         } else {
                             document.getElementById("o").textContent = "Invalid input.";
@@ -111,6 +126,7 @@
                 }
             }
             document.getElementById("i").disabled = false;
+            document.getElementById("o").textContent = Number(document.getElementById("o").textContent);
         }
     </script>
 </body>
