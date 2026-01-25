@@ -44,6 +44,7 @@
             }
         });
         function code() {
+            var r = 0;
             document.getElementById("o").textContent = "";
             document.getElementById("i").disabled = true;
             const code = document.getElementById("i").value;
@@ -102,20 +103,28 @@
                         }
                         break;
                     case "[":
+                        r++;
                         if (mem[memi] < 1) {
                             while (code[i] != "]") {
                                 i += 1;
                             }
+                            r--;
                             break;
                         }
                         break;
                     case "]":
-                        if (mem[memi] > 0) {
+                        if (mem[memi] > 0 && r > 0) {
                             while (code[i] != "[") {
                                 i -= 1;
                             }
                             break;
+                        } else if (r==0) {
+                            document.getElementById("o").textContent = "Recount the brackets";
+                            document.getElementById("i").disabled = false;
+                            return;
+                            break;
                         }
+                        r--;
                         break;
                     default:
                         document.getElementById("o").textContent = "Invalid expression.";
@@ -130,4 +139,5 @@
     </script>
 </body>
 </html>
+
 
