@@ -14,3 +14,6 @@ There are 6 memory cells. When you run the code, it starts in the first cell.
 .: Outputs stuff in the current cell.
 
 ,: Prompts for an input.
+
+[: Starts repeating commands inside until the selected cell is 0. If the current cell is 0, skips the command(s) inside.
+\]: If value is 0, stop the repeat.
