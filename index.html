@@ -23,14 +23,22 @@
             font-family: monospace;
             font-size: 19px
         }
+        button#save {
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
     <textarea id="i"></textarea>
     <button onclick="code()">Run code</button>
     <div id="ou">
-    <pre id="o"></pre>
+        <pre id="o"></pre>
     </div>
+    <h1>Output format</h1>
+    <input type="radio" name="o-form" value="num" id="n">
+    <label for="n">Number</label>
+    <input type="radio" name="o-form" value="text" id="a2">
+    <label for="a2">ASCII (i suppose)</label>
     <h1>Memory</h1>
     <div id="a">0</div>
     <div id="b">0</div>
@@ -38,14 +46,18 @@
     <div id="d">0</div>
     <div id="e">0</div>
     <div id="f">0</div>
+    <button id="save" onclick="copy()">Copy code</button>
     <script>
+        var tempStr = "", tempNum = "", f = 0;
         document.addEventListener("keydown", (e) => {
             if (e.key == "Enter") {
-                code()
+                code();
             }
         });
         function code() {
             var r = 0;
+            tempStr = "";
+            tempNum = "";
             document.getElementById("o").textContent = "";
             document.getElementById("i").disabled = true;
             const code = document.getElementById("i").value;
@@ -81,7 +93,8 @@
                         }
                         break;
                     case ".":
-                        document.getElementById("o").append(String.fromCharCode(mem[memi]));
+                        tempStr = tempStr.concat(String.fromCharCode(mem[memi]));
+                        tempNum = tempNum.concat(String(mem[memi]));
                         break;
                     case ",":
                         mem[memi] = window.prompt("Enter input");
@@ -135,6 +148,29 @@
                 }
             }
             document.getElementById("i").disabled = false;
+            if (f == 0) {
+                document.getElementById("o").textContent = Number(tempNum);
+            } else if (f == 1) {
+                document.getElementById("o").textContent = tempStr;
+            }
+        }
+        document.querySelectorAll("[name=\"o-form\"]")[0].addEventListener("change", () => {
+            console.log("n");
+            f = 0;
+            document.getElementById("o").textContent = Number(tempNum);
+        });
+        document.querySelectorAll("[name=\"o-form\"]")[1].addEventListener("change", () => {
+            console.log("a");
+            f = 1;
+            document.getElementById("o").textContent = tempStr;
+        });
+        function copy() {
+            const text = document.getElementById("i").value;
+            navigator.clipboard.writeText(text);
+            document.getElementById("save").textContent = "Copied!";
+            setTimeout(() => {
+                document.getElementById("save").textContent = "Copy code";
+            }, 600);
         }
     </script>
 </body>
