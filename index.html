@@ -81,7 +81,7 @@
                         }
                         break;
                     case ".":
-                        document.getElementById("o").append(mem[memi]);
+                        document.getElementById("o").append(String.fromCharCode(mem[memi]));
                         break;
                     case ",":
                         mem[memi] = window.prompt("Enter input");
@@ -135,9 +135,7 @@
                 }
             }
             document.getElementById("i").disabled = false;
-            document.getElementById("o").textContent = Number(document.getElementById("o").textContent);
         }
     </script>
 </body>
-
 </html>
