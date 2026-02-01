@@ -40,12 +40,7 @@
     <input type="radio" name="o-form" value="text" id="a2">
     <label for="a2">ASCII (i suppose)</label>
     <h1>Memory</h1>
-    <div id="a">0</div>
-    <div id="b">0</div>
-    <div id="c">0</div>
-    <div id="d">0</div>
-    <div id="e">0</div>
-    <div id="f">0</div>
+    <pre id="m">0</pre>
     <button id="save" onclick="copy()">Copy code</button>
     <script>
         var tempStr = "", tempNum = "", f = 0;
@@ -61,35 +56,29 @@
             document.getElementById("o").textContent = "";
             document.getElementById("i").disabled = true;
             const code = document.getElementById("i").value;
-            const memis = ["a", "b", "c", "d", "e", "f"];
             var memi = 0;
-            var mem = [0, 0, 0, 0, 0, 0];
-            document.getElementById("a").textContent = 0;
-            document.getElementById("b").textContent = 0;
-            document.getElementById("c").textContent = 0;
-            document.getElementById("d").textContent = 0;
-            document.getElementById("e").textContent = 0;
-            document.getElementById("f").textContent = 0;
+            var mem = [0];
             for (var i=0; i < code.length; i++) {
                 switch (code[i]) {
                     case "+":
                         mem[memi] += 1;
-                        document.getElementById(memis[memi]).textContent = mem[memi];
+                        document.getElementById("m").textContent = mem.join(" | ");
                         break;
                     case "-":
                         mem[memi] -= 1;
-                        document.getElementById(memis[memi]).textContent = mem[memi];
+                        document.getElementById("m").textContent = mem.join(" | ");
                         break;
                     case "<":
                         memi -= 1;
                         if (memi < 0) {
-                            memi = 5;
+                            memi = 0;
                         }
                         break;
                     case ">":
                         memi += 1;
-                        if (memi > 5) {
-                            memi = 0;
+                        if (memi >= mem.length) {
+                            mem.push(0);
+                            document.getElementById("m").textContent = mem.join(" | ");
                         }
                         break;
                     case ".":
@@ -109,12 +98,13 @@
                                 document.getElementById("i").disabled = false;
                                 return;
                             }
-                            document.getElementById(memis[memi]).textContent = mem[memi];
+
                         } else {
                             document.getElementById("o").textContent = "Invalid input.";
                             document.getElementById("i").disabled = false;
                             return;
                         }
+                        document.getElementById("m").textContent = mem.join(" | ");
                         break;
                     case "[":
                         r++;
