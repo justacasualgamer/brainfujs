@@ -14,8 +14,15 @@
     </style>
 </head>
 <body>
-    <h1>Why bother visiting this long URL?</h1>
+    <h1 onclick="branchTestFunction()">Why bother visiting this long URL?</h1>
     <p>hi this is a test</p>
+    <script>
+        function branchTestFunction() {
+            document.querySelector("p").style.display = "none";
+        }
+    </script>
+    <p>this text was added from branch A</p>
 </body>
 
 </html>
+
